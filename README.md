@@ -11,6 +11,10 @@ A baixo temos um fluxograma do funcionamento do sistema
 > Estágio atual: MVP
 
 ````mermaid
+---
+config:
+    look: classic
+---
 flowchart TD
     A((Início)) --> B[Autenticação]
     B --> C[Homepage]
