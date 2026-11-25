@@ -1,10 +1,20 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import HttpUrl
 
 from noname.v1 import schemas
 
-app = FastAPI(title="Noname", description="Description.", version="1.0.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    yield
+
+
+app = FastAPI(
+    title="Noname", description="Description.", version="1.0.0", lifespan=lifespan
+)
 
 app.add_middleware(
     middleware_class=CORSMiddleware,
