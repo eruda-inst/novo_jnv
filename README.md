@@ -10,9 +10,9 @@ flowchart TD
     D --> F[Cadastro de equipamentos]
     D --> G[Lista de equipamentos]
     G --> GA[Ver configurações de equipamento]
-    G --> GB[Ver especificidades do equipamento]
-    subgraph espeficidades_de_equipamentos[" "]
+    subgraph GrupoEquip[" "]
         direction LR
         GB -.- OBS[Cada tipo de equipamento tem observações diferentes, como iniciaremos com OLT todas as observaçòes serão idênticas]
     end
+    G --> GrupoEquip
 
