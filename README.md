@@ -20,5 +20,4 @@ flowchart TD
         GB[Ver especificidades do equipamento] -.- OBS[Cada tipo de equipamento tem observações diferentes, como iniciaremos com OLT todas as observaçòes serão idênticas]
     end
     G --> GrupoEquip
-```
 
