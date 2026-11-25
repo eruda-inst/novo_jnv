@@ -18,8 +18,10 @@ config:
 flowchart TD
     A((Início)) --> B[Autenticação]
     B --> C[Homepage]
-    C --> D[Equipamentos]
-    C --> E[Usuários]
+    C --> Toolbar[Barra de ferramentas]
+    Toolbar --> D[Equipamentos]
+    Toolbar --> E[Usuários]
+    E --> Users[Criação, edição e exclusão de usuários]
     D --> F[Cadastro de equipamentos]
     D --> G[Lista de equipamentos]
     G --> GA[Ver configurações de equipamento]
