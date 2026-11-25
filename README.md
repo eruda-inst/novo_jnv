@@ -6,6 +6,10 @@ Atualmente o JNV é um sistema de terminal que integra com OLTs Fiberhome e Data
 
 O JNV Web poderá ser instalado na nuvem, porém uma vpn terá que ser configurada para que seja possível a comunicação com os equipamentos na rede.
 
+
+A baixo temos um fluxograma do funcionamento do sistema
+> Estágio atual: MVP
+
 ````mermaid
 flowchart TD
     A((Início)) --> B[Autenticação]
