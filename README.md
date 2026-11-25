@@ -26,6 +26,14 @@ flowchart TD
     subgraph GrupoEquip[" "]
         direction LR
         GB[Ver especificidades do equipamento] -.- OBS[Cada tipo de equipamento tem observações diferentes, como iniciaremos com OLT todas as observaçòes serão idênticas]
+        direction TD
+        GB --> OLT[OLTs]
+        GB --> SW[Switches]
+        GB --> R[Roteador]
+        OLT --> Onu[Ver lista de ONUs]
+        OLT --> Alarm[Ver lista de alarmes]
+        SW --> ED[Em desenvolviento]
+        R --> ED
     end
     G --> GrupoEquip
 
