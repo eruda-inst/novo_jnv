@@ -1,5 +1,10 @@
-# novo_jnv
-Nova versão do JNV, agora WEB.
+# JNV Web(Nome a ser alterado)
+
+O JNV tem o propósito de ser um agregador e gerenciador universal de infraestrutura de redes, unificando e facilitando o acesso a equipamentos como OLTs, Switches e Roteadores.
+
+Atualmente o JNV é um sistema de terminal que integra com OLTs Fiberhome e Datacom. Não possui muitos recursos e roda de forma localmente.
+
+O JNV Web poderá ser instalado na nuvem, porém uma vpn terá que ser configurada para que seja possível a comunicação com os equipamentos na rede.
 
 ````mermaid
 flowchart TD
@@ -12,7 +17,8 @@ flowchart TD
     G --> GA[Ver configurações de equipamento]
     subgraph GrupoEquip[" "]
         direction LR
-        GB -.- OBS[Cada tipo de equipamento tem observações diferentes, como iniciaremos com OLT todas as observaçòes serão idênticas]
+        GB[Ver especificidades do equipamento] -.- OBS[Cada tipo de equipamento tem observações diferentes, como iniciaremos com OLT todas as observaçòes serão idênticas]
     end
     G --> GrupoEquip
+```
 
