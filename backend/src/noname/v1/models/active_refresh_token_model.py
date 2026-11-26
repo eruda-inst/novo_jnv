@@ -7,7 +7,7 @@ class ActiveRefreshTokenModel(database.Base):
     __tablename__ = "active_refresh_tokens"
 
     jti = Column(type_=String, primary_key=True)
-    expires_at = Column(type_=TIMESTAMP(timezone=True), nullable=False)
+    expires_at = Column(type_=TIMESTAMP(timezone=True), nullable=False, index=True)
     created_at = Column(
         type_=TIMESTAMP(timezone=True), server_default=func.now(), nullable=False
     )
@@ -16,4 +16,5 @@ class ActiveRefreshTokenModel(database.Base):
         Integer,
         ForeignKey("user.id", onupdate="CASCADE", ondelete="CASCADE"),
         nullable=False,
+        index=True,
     )
