@@ -3,11 +3,15 @@ from .permission_schema import (
     PermissionOutSchema,
     PermissionUpdateSchema,
 )
+from .role_schema import RoleInSchema, RoleOutSchema, RoleUpdateSchema
 from .root_schema import RootOutSchema
 
 __all__ = [
     "PermissionInSchema",
     "PermissionOutSchema",
     "PermissionUpdateSchema",
+    "RoleInSchema",
+    "RoleOutSchema",
+    "RoleUpdateSchema",
     "RootOutSchema",
 ]
