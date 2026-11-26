@@ -1,3 +1,4 @@
+from .meta_schema import ListOutSchema, MetaOutSchema
 from .permission_schema import (
     PermissionInSchema,
     PermissionOutSchema,
@@ -8,6 +9,8 @@ from .root_schema import RootOutSchema
 from .user_schema import UserInSchema, UserOutSchema, UserUpdateSchema
 
 __all__ = [
+    "ListOutSchema",
+    "MetaOutSchema",
     "PermissionInSchema",
     "PermissionOutSchema",
     "PermissionUpdateSchema",
