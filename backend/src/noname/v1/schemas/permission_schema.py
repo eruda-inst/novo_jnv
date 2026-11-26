@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field, PositiveInt, field_serializer
 from noname.v1 import config
 
 
-class PermissionIn(BaseModel):
+class PermissionInSchema(BaseModel):
     code: str = Field(description="Code of the permission.", examples=["olts:read"])
     name: str = Field(description="Name of the permission", examples=["Read OLTs"])
     description: str | None = Field(
@@ -19,7 +19,7 @@ class PermissionIn(BaseModel):
     )
 
 
-class PermissionOut(BaseModel):
+class PermissionOutSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: PositiveInt = Field(description="ID of the permission.", examples=[1])
@@ -52,7 +52,7 @@ class PermissionOut(BaseModel):
         return value
 
 
-class PermissionUpdate(BaseModel):
+class PermissionUpdateSchema(BaseModel):
     code: str | None = Field(
         default=None,
         description="Code of the permission.",
