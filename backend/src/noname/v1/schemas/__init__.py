@@ -1,3 +1,4 @@
+from .authentication_schema import CredentialsIn, TokenOut
 from .meta_schema import ListOutSchema, MetaOutSchema
 from .permission_schema import (
     PermissionInSchema,
@@ -9,6 +10,7 @@ from .root_schema import RootOutSchema
 from .user_schema import UserInSchema, UserOutSchema, UserUpdateSchema
 
 __all__ = [
+    "CredentialsIn",
     "ListOutSchema",
     "MetaOutSchema",
     "PermissionInSchema",
@@ -18,6 +20,7 @@ __all__ = [
     "RoleOutSchema",
     "RoleUpdateSchema",
     "RootOutSchema",
+    "TokenOut",
     "UserInSchema",
     "UserOutSchema",
     "UserUpdateSchema",
