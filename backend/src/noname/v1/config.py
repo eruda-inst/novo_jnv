@@ -11,5 +11,7 @@ class Settings(BaseSettings):
 
     database_url_async: str = Field(default="driver://user:password@localhost/dbname")
 
+    timezone: str = Field(default="Foo/Bar")
+
 
 settings = Settings()
