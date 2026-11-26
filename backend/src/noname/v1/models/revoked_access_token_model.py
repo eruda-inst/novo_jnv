@@ -3,7 +3,7 @@ from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, String, func
 from noname.v1 import database
 
 
-class RevokedAcessTokenModel(database.Base):
+class RevokedAccessTokenModel(database.Base):
     __tablename__ = "revoked_access_tokens"
 
     jti = Column(type_=String, primary_key=True)
