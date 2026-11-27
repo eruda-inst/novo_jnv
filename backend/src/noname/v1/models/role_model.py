@@ -2,6 +2,7 @@ from sqlalchemy import TIMESTAMP, Boolean, Column, Integer, String, func, text
 from sqlalchemy.orm import relationship
 
 from noname.v1 import database
+from noname.v1.models.user_role_model import user_role  # noqa: F401
 
 
 class RoleModel(database.Base):

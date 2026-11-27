@@ -2,6 +2,7 @@ from sqlalchemy import TIMESTAMP, Boolean, Column, Integer, String, func, text
 from sqlalchemy.orm import relationship
 
 from noname.v1 import database
+from noname.v1.models.role_permission_model import role_permission  # noqa: F401
 
 
 class PermissionModel(database.Base):
