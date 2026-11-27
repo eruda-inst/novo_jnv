@@ -64,3 +64,15 @@ async def logout(
         refresh_token=refresh_token,
         user_id=int(current_user.id),  # type: ignore[arg-type]
     )
+
+
+@authentication_router.post(
+    path="/refresh", summary="Refresh access and refresh tokens."
+)
+async def refresh(
+    db: DatabaseDependency, refresh_token: RefreshToken
+) -> schemas.TokenOutSchema:
+    """
+    Validate an active refresh token, rotate it, and return a new pair of JWT access and refresh tokens.
+    """
+    return await services.refresh(db=db, refresh_token=refresh_token)

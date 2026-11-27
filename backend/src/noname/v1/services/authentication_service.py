@@ -130,3 +130,45 @@ async def logout(
         pass
 
     await db.commit()
+
+
+async def refresh(db: AsyncSession, refresh_token: str) -> schemas.TokenOutSchema:
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Refresh token inválido ou expirado.",
+    )
+
+    try:
+        payload = jwt.decode(
+            jwt=refresh_token, key=_SECRET_KEY, algorithms=[_ALGORITHM]
+        )
+    except jwt.InvalidTokenError:
+        raise credentials_exception
+
+    jti = payload.get("jti")
+    sub = payload.get("sub")
+    if payload.get("type") != "refresh" or not jti or not sub:
+        raise credentials_exception
+
+    stored_token = await db.get(models.ActiveRefreshTokenModel, jti)
+    if stored_token is None:
+        raise credentials_exception
+
+    await db.delete(stored_token)
+
+    new_access, _, _ = _create_token(
+        sub, "access", dt.timedelta(minutes=_ACCESS_TOKEN_EXPIRE_MINUTES)
+    )
+    new_refresh, new_jti, new_expires_at = _create_token(
+        sub, "refresh", dt.timedelta(days=_REFRESH_TOKEN_EXPIRE_DAYS)
+    )
+    db.add(
+        models.ActiveRefreshTokenModel(
+            jti=new_jti,
+            expires_at=new_expires_at,
+            user_id=stored_token.user_id,
+        )
+    )
+    await db.commit()
+
+    return schemas.TokenOutSchema(access_token=new_access, refresh_token=new_refresh)
