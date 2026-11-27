@@ -4,7 +4,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import HttpUrl
 
-from noname.v1 import schemas
+from noname.v1 import api, schemas
 
 
 @asynccontextmanager
@@ -23,6 +23,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(router=api.api_v1_router)
 
 
 @app.get(path="/", summary="Get API metadata and documentation links.")
