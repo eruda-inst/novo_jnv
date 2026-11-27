@@ -15,7 +15,7 @@ class CredentialsIn(BaseModel):
     )
 
 
-class TokenOut(BaseModel):
+class TokenOutSchema(BaseModel):
     expires_in: PositiveInt | None = Field(
         default=config.settings.jwt_token_expire_seconds,
         description="JWT expiration time in seconds.",
