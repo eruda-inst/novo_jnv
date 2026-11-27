@@ -1,6 +1,7 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Body, Depends, status
+from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from noname.v1 import database, dependencies, models, schemas, services
@@ -10,6 +11,14 @@ authentication_router = APIRouter(prefix="/authentication", tags=["Authenticatio
 DatabaseDependency = Annotated[AsyncSession, Depends(database.get_db)]
 CurrentUserDependency = Annotated[
     models.UserModel, Depends(dependencies.get_current_user)
+]
+RefreshToken = Annotated[
+    str,
+    Body(
+        embed=True,
+        description="Valid JWT refresh token used to issue new tokens.",
+        examples=["eyJ..."],
+    ),
 ]
 
 
@@ -31,3 +40,27 @@ async def login(
     Validate user credentials and return a new pair of JWT access and refresh tokens.
     """
     return await services.login(db=db, credentials=credentials)
+
+
+@authentication_router.post(
+    path="/logout",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Revoke tokens and end session.",
+)
+async def logout(
+    db: DatabaseDependency,
+    current_user: CurrentUserDependency,
+    credentials: Annotated[
+        HTTPAuthorizationCredentials, Depends(dependencies.security)
+    ],
+    refresh_token: RefreshToken,
+) -> None:
+    """
+    Revoke the current access token and invalidate the provided refresh token to end the user session.
+    """
+    await services.logout(
+        db=db,
+        access_token=credentials.credentials,
+        refresh_token=refresh_token,
+        user_id=int(current_user.id),  # type: ignore[arg-type]
+    )

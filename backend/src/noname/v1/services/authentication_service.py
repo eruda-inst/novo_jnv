@@ -85,3 +85,48 @@ async def login(
     return schemas.TokenOutSchema(
         access_token=access_token, refresh_token=refresh_token
     )
+
+
+async def logout(
+    db: AsyncSession, access_token: str, refresh_token: str, user_id: PositiveInt
+) -> None:
+    try:
+        access_payload = jwt.decode(
+            jwt=access_token, key=_SECRET_KEY, algorithms=[_ALGORITHM]
+        )
+    except jwt.InvalidTokenError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Access token inválido ou expirado.",
+        )
+
+    access_jti = access_payload.get("jti")
+    access_exp = access_payload.get("exp")
+    if access_payload.get("type") != "access" or not access_jti or not access_exp:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token inválido.",
+        )
+
+    if await db.get(models.RevokedAccessTokenModel, access_jti) is None:
+        db.add(
+            models.RevokedAccessTokenModel(
+                jti=access_jti,
+                expires_at=dt.datetime.fromtimestamp(access_exp, tz=dt.UTC),
+                user_id=user_id,
+            )
+        )
+
+    try:
+        refresh_payload = jwt.decode(
+            jwt=refresh_token, key=_SECRET_KEY, algorithms=[_ALGORITHM]
+        )
+        refresh_jti = refresh_payload.get("jti")
+        if refresh_payload.get("type") == "refresh" and refresh_jti:
+            stored_refresh = await db.get(models.ActiveRefreshTokenModel, refresh_jti)
+            if stored_refresh is not None and bool(stored_refresh.user_id == user_id):
+                await db.delete(stored_refresh)
+    except jwt.InvalidTokenError:
+        pass
+
+    await db.commit()
