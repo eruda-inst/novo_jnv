@@ -9,9 +9,10 @@ class Settings(BaseSettings):
         env_file=".env", env_file_encoding="utf-8"
     )
 
-    database_url_async: str = Field(default="driver://user:password@localhost/dbname")
+    database_url_sync: str = Field(default="...")
+    database_url_async: str = Field(default="...")
 
-    timezone: str = Field(default="Foo/Bar")
+    timezone: str = Field(default="...")
 
 
 settings = Settings()

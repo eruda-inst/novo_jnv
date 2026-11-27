@@ -14,7 +14,7 @@ class ActiveRefreshTokenModel(database.Base):
 
     user_id = Column(
         Integer,
-        ForeignKey("user.id", onupdate="CASCADE", ondelete="CASCADE"),
+        ForeignKey("users.id", onupdate="CASCADE", ondelete="CASCADE"),
         nullable=False,
         index=True,
     )
